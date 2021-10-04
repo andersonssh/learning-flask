@@ -1,38 +1,20 @@
-from flask import Flask,request, Response, redirect, url_for, render_template
-from flask_bootstrap import Bootstrap
-app = Flask(__name__)
-Bootstrap(app)
+from flask import Flask, render_template, flash
+
+app = Flask(__name__, template_folder='views')
+app.config['SECRET_KEY'] = 'dev'
 
 @app.route('/')
 def index():
-    return '<a href="/posts"> Posts </a>'
-
-@app.route('/response')
-def responserrrrr():
-    return render_template('response.html')
-
-@app.route('/posts')
-@app.route('/posts/<int:id>')
-def posts(id):
-    titulo = request.args.get('titulo')
-    data = dict(
-        path=request.path,
-        referrer=request.referrer,
-        content_type=request.content_type,
-        method=request.method,
-        titulo=titulo,
-        id= id if id else 0
-    )
-    return data
-
-@app.route('/redirect')
-def redirecionamento():
-    #url_for pega o nome da funcao nao da rota.
-    #quando app.route('/redirect') se vincula a funcao, esta funcao esta ligada aquela url
-    #o url for cuida para que essa funcao seja acessada independente do caminho da rota
-    return redirect(url_for('responserrrrr'))
-
+    user = {
+        'name': 'marcos souza junior',
+        'idade': 10000,
+        'email': 'sousajunior@gmail.com'
+    }
+    #('.html', user = user) o primeiro user é como será chamado dentro do template, e o segundo é o objeto atual da funcao que será passado
+    flash('Mensagem que vou enviar' )
+    flash('massavelio')
+    return render_template('index.html', user=user)
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
