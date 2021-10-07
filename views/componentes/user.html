@@ -1,0 +1,25 @@
+{% macro componente_usuario(users) %}
+{% for user in users%}
+    {%set nome = user['nome']%}
+    {%set email = user['email']%}
+    {%set idade = user['idade']%}
+    {%set since = user['since']%}
+            <div class="alert alert-warning">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item {{'bg-success' if user['status'] else 'bg-danger'}}">
+                        nome: {{ nome }}
+                    </li>
+                    <li class="list-group-item">
+                        email: {{ email }}
+                    </li>
+                    <li class="list-group-item">
+                        idade: {{ idade }}
+                    </li>
+                    <li class="list-group-item">
+                        desde: {{ since | format_dat }} funcao criada para formatar data
+                    </li>
+
+                </ul>
+            </div>
+    {%endfor%}
+{%endmacro%}

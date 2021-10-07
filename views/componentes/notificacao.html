@@ -1,8 +1,11 @@
-{% with messages = get_flashed_messages()%}
+{#ativando categorias com with_categories= True#}
+{#agora a mensagem vem em tupla com (categoria, mensagem)#}
+{% with messages = get_flashed_messages(with_categories=True)%}
         {%if messages%}
-            {%for message in messages%}
-                <div class="alert alert-warning text-center" role="alert">
-                    {{message}}
+            {%for categoria, mensagem in messages%}
+
+                <div class="alert alert-{{categoria}} text-center" role="alert">
+                    {{mensagem}}
                 </div>
             {%endfor%}
         {%endif%}
