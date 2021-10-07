@@ -1,0 +1,23 @@
+{% extends "base.html"%}
+{% block conteudo%}
+    {% include 'componentes/notificacao.html' %}
+    {% for user in users%}
+            <div class="alert alert-warning">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item {{'bg-success' if user['status'] else 'bg-danger'}}">
+                        nome: {{ user.nome }}
+                    </li>
+                    <li class="list-group-item">
+                        email: {{ user.email }}
+                    </li>
+                    <li class="list-group-item">
+                        idade: {{ user['idade'] }}
+                    </li>
+                    <li class="list-group-item">
+                        desde: {{ user['since'] | format_dat }} funcao criada para formatar data
+                    </li>
+
+                </ul>
+            </div>
+    {%endfor%}
+{% endblock %}

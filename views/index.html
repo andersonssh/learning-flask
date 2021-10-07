@@ -1,14 +1,6 @@
-<H1>HILOOOOOOOW</H1>
-    {% with messages = get_flashed_messages()%}
-        {%if messages%}
-            {%for message in messages%}
-                <div>
-                    <p>{{message}}</p>
-                </div>
-            {%endfor%}
-        {%endif%}
-    {%endwith%}
-
-{%for k, v in user.items()%}
-<p>{{k}} -> {{v}}</p>
-{%endfor%}
+{% extends "base.html"%}
+{% block subtitulo %}HOME{% endblock%}
+{% block conteudo %}
+    {% include 'componentes/notificacao.html' %}
+    <a href="{{url_for('users')}}">usuários</a>
+{%endblock%}

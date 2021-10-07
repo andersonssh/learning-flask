@@ -1,0 +1,40 @@
+{% extends 'base.html'%}
+{%block conteudo%}
+{{user_page}}
+{{not user_page}}
+<br />
+{%if user_page%}
+    <a href="#">link que so aparece se user_page for verdadeiro</a>
+{%else%}
+    <p>Nenhum link foi gerado pois user_page é False</p>
+{%endif%}
+<br >
+{{ texto }} -> sem nada
+<br >
+texto.title() &nbsp; &nbsp; &nbsp;
+{{ texto.title() }} -> com capitalize
+<br >
+texto | title &nbsp; &nbsp; &nbsp;
+{{ texto | title}} -> com capitalize
+<p>Os 2 modos funcionam</p>
+<br >
+{{ texto.lower()}} -> lower
+<br >
+truca a msg de acordo com a quantidade de caract -3 (reticencias) só funciona com pipe.
+<br>
+{{ texto | truncate(4) }} -> com truncate
+<br >
+<br>
+TESTE DE FUNCAO CRIADA EM FILTROS
+<br>
+passando 2  parametros para funcao no html  --'HTML 1' | teste('HTML 2')--
+<br>
+{{ 'HTML 1' | teste('HTML 2') }}
+<br>
+passando 3 parametros para funcao no html
+<br>
+{{ 'HTML 1' | f3('HTML 2', 'HTML 3')}}
+
+
+
+{%endblock%}
