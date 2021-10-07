@@ -5,7 +5,7 @@ Bootstrap(app)
 
 @app.route('/')
 def index():
-    return '<a href="/posts"> Posts </a>'
+    return 'contato inicial'
 
 @app.route('/response')
 def responserrrrr():

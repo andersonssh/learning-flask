@@ -1,0 +1,23 @@
+
+<div style="text-align: center; margin: auto;margin: 20px auto 20px auto" >
+    {% if not current_user.is_authenticated%}
+        <a style="color: red;" href="{{url_for('registro')}}"> REGISTAR</a>
+        <a style="color: red;" href="{{url_for('login')}}"> LOGIN</a>
+    {%else%}
+        <a style="color: red;" href="{{url_for('logout')}}"> SAIR</a>
+    {%endif%}
+</div>
+{%if current_user.is_authenticated%}
+    {%for usuario in usuarios%}
+    <div style="display: inline-block; padding: 2px;margin: 5px;text-align: center; color: white; background-color: black; width: 150px;">
+
+        <h3> Logar como </h3>
+        <p style="color: red; font-size: 15pt;font-weight: bold;">{{usuario.nome}}</p>
+        <a style="color: blue" href="{{url_for('zona_usuario', id=usuario.id)}}">Acessar</a>
+    </div>
+
+
+    {%endfor%}
+{%else%}
+<h1>------------------------------------------------------</h1>
+{%endif%}

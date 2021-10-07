@@ -1,5 +1,4 @@
 from flask import Flask, render_template, flash
-from flask_bootstrap import Bootstrap
 from datetime import datetime
 
 #IMPORTANDO OS FILTROS!!
@@ -19,7 +18,6 @@ app.jinja_env.filters['teste'] = filtro.teste
 app.jinja_env.filters['f3'] = filtro.func3
 @app.route('/')
 def index():
-
     #('.html', user = user) o primeiro user é como será chamado dentro do template, e o segundo é o objeto atual da funcao que será passado
     #flash(msg, categoria)
     #flash(message="mesangem", category="categoriaquequiser")
