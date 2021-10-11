@@ -18,7 +18,7 @@ app.jinja_env.filters['teste'] = filtro.teste
 app.jinja_env.filters['f3'] = filtro.func3
 @app.route('/')
 def index():
-    #('.html', user = user) o primeiro user é como será chamado dentro do template, e o segundo é o objeto atual da funcao que será passado
+    #('.html', user = user) o primeiro user é como será chamado dentro do templates, e o segundo é o objeto atual da funcao que será passado
     #flash(msg, categoria)
     #flash(message="mesangem", category="categoriaquequiser")
     flash('Mensagem que vou enviar', 'warning' )
