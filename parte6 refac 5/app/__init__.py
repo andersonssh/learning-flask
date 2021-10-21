@@ -6,6 +6,7 @@ from flask_login import LoginManager
 #antes, as 2 possuiam os parametros com a instancia Flask
 db = SQLAlchemy()
 login_manager = LoginManager()
+bootstrap = Bootstrap()
 
 def create_app():
     app = Flask(__name__)
@@ -15,6 +16,7 @@ def create_app():
 
     db.init_app(app)
     login_manager.init_app(app)
+    bootstrap.init_app(app)
 
     from . import routes
     routes.init_app(app)
