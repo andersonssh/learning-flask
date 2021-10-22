@@ -15,7 +15,8 @@ def create_app():
 
     db.init_app(app)
     login_manager.init_app(app)
-
+    bootstrap.init_app(app)
+    
     from . import routes
     routes.init_app(app)
 

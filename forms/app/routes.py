@@ -5,11 +5,10 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from . import bootstrap
 from . import db
 from .models import User
-from .forms import LoginForm
+from .forms import LoginForm, RegisterForm
 
 
 def init_app(app):
-    bootstrap.init_app(app)
     @app.route("/")
     def index():
         users = User.query.all() # Select * from users; 
@@ -31,18 +30,19 @@ def init_app(app):
 
     @app.route("/register", methods=["GET", "POST"])
     def register():
-        if request.method == "POST":
+        formm = RegisterForm()
+        if formm.validate_on_submit():
             user = User()
-            user.name = request.form["name"]
-            user.email = request.form["email"]
-            user.password = generate_password_hash(request.form["password"])
+            user.name = formm.name.data
+            user.email = formm.email.data
+            user.password = generate_password_hash(formm.password.data)
 
             db.session.add(user)
             db.session.commit()
 
             return redirect(url_for("index"))
 
-        return render_template("register.html")
+        return render_template("register.html", form=formm)
 
     @app.route("/login", methods=["GET", "POST"])
     def login():
@@ -54,11 +54,11 @@ def init_app(app):
             user = User.query.filter_by(email=form.email.data).first()
 
             if not user:
-                flash("Credênciais incorretas")
+                flash("Credênciais incorretas", "danger")
                 return redirect(url_for("login"))
 
             if not check_password_hash(user.password, form.password.data):
-                flash("Usuário ou senha incorreto")
+                flash("Usuário ou senha incorreto", "danger")
                 return redirect(url_for("login"))
 
             login_user(user, remember=form.remember.data, duration=timedelta(days=7))
