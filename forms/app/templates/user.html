@@ -3,9 +3,14 @@
 {% block content %}
 
 <div class="mt-5">
+
   <a href="{{ url_for('index') }}" class="btn btn-info">
     <i class="fa fa-arrow-left" aria-hidden="true"></i>
     Voltar
+  </a>
+  <a href="{{ url_for('user_add_book', id=user.id) }}" class="btn btn-success">
+  <i class="fa fa-plus" aria-hidden="true"></i>
+    Adicionar livros
   </a>
   
   <table class="table table-striped mt-3">
@@ -32,6 +37,13 @@
     </tbody>
   </table>
 </div>
+  <h2 class="text-muted">Livros</h2>
+  <ul class="list-group list-group-flush mt-5">
+    {# a classe user esta vinculada com a classe livros entao ela pode fazer referencia a ela diretamente#}
+    {%for book in user.books%}
+      <li class="list-group-item">{{book.name}} {{book.user}}</li>
+    {%endfor%}
+  </ul>
 
 
 {% endblock %}

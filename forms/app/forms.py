@@ -1,8 +1,8 @@
 from flask_wtf import FlaskForm
 from wtforms.fields.html5 import EmailField
-from wtforms.fields import StringField, PasswordField, BooleanField, SubmitField
+from wtforms.fields import StringField, PasswordField, BooleanField, SubmitField, SelectField
 from wtforms.validators import Length, Email, DataRequired
-
+from .models import Book
 
 class LoginForm(FlaskForm):
     # a vantagem em colocar esses campos diretamente no html
@@ -29,3 +29,26 @@ class RegisterForm(FlaskForm):
         Length(3, 6, "a senha deve ter entre 3 a 6 caracteres")
     ])
     submit = SubmitField('cadastrar')
+
+class BookForm(FlaskForm):
+    name = StringField('Nome do livro', validators=[
+        DataRequired('O campo é obrigatorio (Mensagem de erro)')
+    ])
+    submit = SubmitField('Salvar')
+
+class UserBookForm(FlaskForm):
+    #book = SelectField('Livro', coerce=int,
+     #                  choices=[
+    #                            (1, 'seila velio n add'),
+     #                           (2, 'teste')])
+    book = SelectField('Livro')
+    submit = SubmitField('Adicionar')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        #passando choices para Select field instanciado na var book
+        self.book.choices = [
+            #passando todos os livros e passando em lista de tuplas
+            (book.id, book.name) for book in Book.query.all()
+        ]
+        print(self.book.choices)
