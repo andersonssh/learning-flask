@@ -1,0 +1,5 @@
+FLASK
+FLASK-SQLALCHEMY
+FLASK-LOGIN==0.4.1
+email_validator
+flask-wtf
