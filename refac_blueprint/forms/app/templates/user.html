@@ -4,11 +4,11 @@
 
 <div class="mt-5">
 
-  <a href="{{ url_for('index') }}" class="btn btn-info">
+  <a href="{{ url_for('user.index') }}" class="btn btn-info">
     <i class="fa fa-arrow-left" aria-hidden="true"></i>
     Voltar
   </a>
-  <a href="{{ url_for('user_add_book', id=user.id) }}" class="btn btn-success">
+  <a href="{{ url_for('book.user_add_book', id=user.id) }}" class="btn btn-success">
   <i class="fa fa-plus" aria-hidden="true"></i>
     Adicionar livros
   </a>
@@ -29,7 +29,7 @@
           {{ user.profile.photo }}
         </td>
         <td>
-          <a class="btn btn-danger btn-sm" href="{{ url_for('delete', id=user.id) }}">
+          <a class="btn btn-danger btn-sm" href="{{ url_for('user.delete', id=user.id) }}">
             <i class="fa fa-trash" aria-hidden="true"></i>
           </a>
         </td>

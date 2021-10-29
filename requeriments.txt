@@ -1,4 +1,0 @@
-flask
-flask-login==0.4.1
-flask-sqlalchemy
-flask-bootstrap
