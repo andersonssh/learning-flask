@@ -1,4 +1,6 @@
-flask
-flask-login==0.4.1
-flask-sqlalchemy
-flask-bootstrap
+FLASK
+FLASK-SQLALCHEMY
+FLASK-LOGIN==0.4.1
+email_validator
+flask-wtf
+bootstrap-flask

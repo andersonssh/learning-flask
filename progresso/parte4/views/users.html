@@ -1,8 +1,0 @@
-{% extends "base.html"%}
-{% block conteudo%}
-    {% include 'componentes/notificacao.html' %}
-    {% from 'componentes/user.html' import componente_usuario%}
-    {%for i in range(3)%}
-        {{ componente_usuario(users)}}
-    {% endfor %}
-{% endblock %}
