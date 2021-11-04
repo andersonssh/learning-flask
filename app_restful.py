@@ -1,7 +1,8 @@
 from flask import Flask, request
 from flask_restful import Resource, Api
 import json
-from skill import Habilidades, ListaHabilidades
+from skill import Habilidades, ListaHabilidades, skills
+import requests
 
 app = Flask(__name__)
 api = Api(app)
@@ -48,6 +49,16 @@ class ListaDevs(Resource):
     def post(self):
         dados = json.loads(request.data)
         dados['id'] = len(devs)
+        print(dados)
+        habilidades = dados['habilidades']
+        #verifica se as habilidades inseridas sao validas
+        print(skills, '< skills')
+        if habilidades:
+            for habilidade in habilidades:
+                print(habilidade)
+                if habilidade not in skills:
+                    return {'status': 'fracasso', 'message': 'a habilidade nao existe em nosso banco de dados, cadastre uma!'}
+
         devs.append(dados)
         return {'status': 'sucesso', 'message': 'usuario cadastrado!'}
 
