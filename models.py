@@ -39,8 +39,18 @@ class Atividades(Base, Agilize):
     pessoa_id = Column(Integer, ForeignKey('pessoas.id'))
     pessoa = relationship('Pessoas')
 
+class Usuarios(Base, Agilize):
+    __tablename__='usuarios'
+    id = Column(Integer, primary_key=True)
+    login = Column(String(20), unique=True)
+    senha = Column(String(20))
+
+    def __repr__(self):
+        return '<Usuario - {}>'.format(self.login)
+
 def init_db():
         Base.metadata.create_all(bind=engine)
+
 
 
 if __name__ == '__main__':
