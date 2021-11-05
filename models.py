@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, Integer, String, ForeignKey
+from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Boolean
 from sqlalchemy.orm import scoped_session, sessionmaker, relationship
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -44,12 +44,13 @@ class Usuarios(Base, Agilize):
     id = Column(Integer, primary_key=True)
     login = Column(String(20), unique=True)
     senha = Column(String(20))
+    ativo = Column(Integer)
 
     def __repr__(self):
         return '<Usuario - {}>'.format(self.login)
 
 def init_db():
-        Base.metadata.create_all(bind=engine)
+    Base.metadata.create_all(bind=engine)
 
 
 

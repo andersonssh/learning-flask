@@ -23,7 +23,7 @@ api = Api(app)
 def verificacao(login, senha):
     if not (login, senha):
         return False
-    return Usuarios.query.filter_by(login=login, senha=senha).first()
+    return Usuarios.query.filter_by(login=login, senha=senha, ativo=1).first()
 
 class Pessoa(Resource):
     def get(self, nome):
@@ -41,6 +41,7 @@ class Pessoa(Resource):
             }
         return response
 
+    @auth.login_required
     def put(self, nome):
         pessoa = Pessoas.query.filter_by(nome=nome).first()
         dados = request.json
@@ -56,7 +57,7 @@ class Pessoa(Resource):
             'id': pessoa.id
         }
         return response
-
+    @auth.login_required
     def delete(self, nome):
         pessoa = Pessoas.query.filter_by(nome=nome)
         pessoa.delete()
@@ -72,7 +73,7 @@ class ListaPessoas(Resource):
         pessoa = Pessoas.query.all()
         response = [{'id': i.id, 'nome': i.nome, 'idade': i.idade} for i in pessoa]
         return response
-
+    @auth.login_required
     def post(self):
         dados = request.json
         pessoa = Pessoas(nome=dados['nome'], idade=dados['idade'])
@@ -81,11 +82,12 @@ class ListaPessoas(Resource):
         return {'status': 'sucesso', 'message': 'usuario cadastrado'}
 
 class ListaAtividades(Resource):
+    @auth.login_required
     def get(self):
         atividades = Atividades.query.all()
         print(atividades)
         return [{'atividade': i.nome, 'responsavel': i.pessoa.nome} for i in atividades]
-
+    @auth.login_required
     def post(self):
         dados = request.json
         pessoa = Pessoas.query.filter_by(nome=dados['pessoa']).first()

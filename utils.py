@@ -19,8 +19,8 @@ def exclui_pessoa():
     pessoa.delete()
 
 
-def insere_usuario(login, senha):
-    usuario = Usuarios(login=login, senha=senha)
+def insere_usuario(login, senha, ativo):
+    usuario = Usuarios(login=login, senha=senha, ativo=ativo)
     usuario.save()
 
 def consulta_todos_usuarios():
@@ -28,7 +28,7 @@ def consulta_todos_usuarios():
     print(usuario)
 
 if __name__ == '__main__':
-    #insere_usuario('joaozao', '321')
+    insere_usuario('joaozao1', '123', 0)
     #insere_pessoas()
     #exclui_pessoa()
     #altera_pessoa()
