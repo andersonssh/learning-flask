@@ -9,7 +9,18 @@ db_session = scoped_session(sessionmaker(autocommit=False,
 Base = declarative_base()
 Base.query = db_session.query_property()
 
-class Pessoas(Base):
+class Agilize:
+    # metodo para salvar!!!!!!
+    def save(self):
+        # adicionando o proprio objeto!!!!!!
+        db_session.add(self)
+        db_session.commit()
+
+    def delete(self):
+        db_session.delete(self)
+        db_session.commit()
+
+class Pessoas(Base, Agilize):
     __tablename__='pessoas'
     id = Column(Integer, primary_key=True)
     nome = Column(String(40), index=True)
@@ -19,17 +30,9 @@ class Pessoas(Base):
     def __repr__(self):
         return '<Pessoa-> {}>'.format(self.nome)
 
-    #metodo para salvar!!!!!!
-    def save(self):
-        #adicionando o proprio objeto!!!!!!
-        db_session.add(self)
-        db_session.commit()
 
-    def delete(self):
-        db_session.delete(self)
-        db_session.commit()
 
-class Atividades(Base):
+class Atividades(Base, Agilize):
     __tablename__='atividades'
     id = Column(Integer, primary_key=True)
     nome = Column(String(80))
