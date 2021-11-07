@@ -3,3 +3,4 @@ FLASK-SQLALCHEMY
 FLASK-LOGIN==0.4.1
 FLASK-WTF
 Bootstrap-Flask==1.2.0
+pytest==5.4.1
