@@ -67,4 +67,10 @@ class Hotel(Resource):
         return novo_hotel, 201 # codigo para: created
 
     def delete(self, hotel_id):
-        pass
+        for i in range(len(hoteis)):
+            if hoteis[i]['hotel_id'] == hotel_id:
+                hoteis.pop(i)
+                return {'message': 'hotel deletado!'}
+
+        return {'message': 'hotel não encontrado!'}
+
