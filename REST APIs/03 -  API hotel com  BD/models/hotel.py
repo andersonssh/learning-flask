@@ -1,4 +1,14 @@
-class HotelModel:
+from sqlalchemy_ import bd
+
+class HotelModel(bd.Model):
+    __tablename__ = 'hoteis'
+    hotel_id = bd.Column(bd.String, primary_key=True)
+    nome = bd.Column(bd.String(80))
+    estrelas = bd.Column(bd.Float(precision=1))
+    diaria = bd.Column(bd.Float(precision=2))
+    cidade = bd.Column(bd.String(40))
+
+
     def __init__(self, hotel_id, nome, estrelas, diaria, cidade):
         self.hotel_id = hotel_id
         self.nome = nome
