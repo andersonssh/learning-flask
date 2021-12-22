@@ -24,3 +24,14 @@ class HotelModel(bd.Model):
             'diaria': self.diaria,
             'cidade': self.cidade
         }
+
+    @classmethod
+    def encontra_hotel(cls, hotel_id):
+        hotel = cls.query.get(hotel_id)
+        if hotel:
+            return hotel
+        return None
+
+    def save_hotel(self):
+        bd.session.add(self)
+        bd.session.commit()

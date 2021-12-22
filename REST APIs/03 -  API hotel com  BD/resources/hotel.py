@@ -36,15 +36,9 @@ class Hotel(Resource):
     atributos.add_argument('diaria', type=float)
     atributos.add_argument('cidade')
 
-    def encontrar_hotel(hotel_id):
-        for hotel in hoteis:
-            if hotel['hotel_id'] == hotel_id:
-                return hotel
-
-        return None
 
     def get(self, hotel_id):
-        hotel = Hotel.encontrar_hotel(hotel_id)
+        hotel = HotelModel.encontra_hotel(hotel_id)
 
         if hotel:
             return hotel
@@ -52,15 +46,20 @@ class Hotel(Resource):
         return {'message': 'Hotel not found'}, 404
 
     def post(self, hotel_id):
+        if HotelModel.encontra_hotel(hotel_id):
+            return {"message": f"Hotel id '{hotel_id}' já existe."}, 400
+
+
         dados = {'hotel_id': hotel_id, **Hotel.atributos.parse_args()}
         #as chaves serao passadas para o construtor noformato (nome='xxx'....)
-        hotel_obj = HotelModel(**dados)
-        hoteis.append(hotel_obj.json())
-        return dados, 200
+        hotel = HotelModel(**dados)
+        hotel.save_hotel()
+
+        return hotel.json(), 200
 
 
     def put(self, hotel_id):
-        hotel = Hotel.encontrar_hotel(hotel_id)
+        hotel = Hotel.encontra_hotel(hotel_id)
         novo_hotel = HotelModel(hotel_id=hotel_id, **Hotel.atributos.parse_args()).json()
         if hotel:
             hotel.update(novo_hotel)
