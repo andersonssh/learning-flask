@@ -41,7 +41,7 @@ class Hotel(Resource):
         hotel = HotelModel.encontra_hotel(hotel_id)
 
         if hotel:
-            return hotel
+            return hotel.json()
 
         return {'message': 'Hotel not found'}, 404
 
