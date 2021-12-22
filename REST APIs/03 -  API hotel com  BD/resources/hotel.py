@@ -36,6 +36,7 @@ class Hotel(Resource):
     atributos.add_argument('diaria', type=float)
     atributos.add_argument('cidade')
 
+    # acessa com: **Hotel.atributos.parse_args()
 
     def get(self, hotel_id):
         hotel = HotelModel.encontra_hotel(hotel_id)
@@ -59,14 +60,17 @@ class Hotel(Resource):
 
 
     def put(self, hotel_id):
-        hotel = Hotel.encontra_hotel(hotel_id)
-        novo_hotel = HotelModel(hotel_id=hotel_id, **Hotel.atributos.parse_args()).json()
-        if hotel:
-            hotel.update(novo_hotel)
-            return novo_hotel, 200, 'OK'
+        dados = {'hotel_id': hotel_id, **Hotel.atributos.parse_args()}
+        hotel_encontrado = HotelModel.encontra_hotel(hotel_id)
+        # hotel encontrado
+        if hotel_encontrado:
+            # atualiza hotel
+            hotel_encontrado.update_hotel(**dados)
+            return hotel_encontrado.json(), 200
 
-        hoteis.append(novo_hotel)
-        return novo_hotel, 201 # codigo para: created
+        hotel = HotelModel(**dados)
+        hotel.save_hotel()
+        return hotel.json(), 201 # hotel criado
 
     def delete(self, hotel_id):
         for i in range(len(hoteis)):
