@@ -73,10 +73,9 @@ class Hotel(Resource):
         return hotel.json(), 201 # hotel criado
 
     def delete(self, hotel_id):
-        for i in range(len(hoteis)):
-            if hoteis[i]['hotel_id'] == hotel_id:
-                hoteis.pop(i)
-                return {'message': 'hotel deletado!'}
-
+        hotel = HotelModel.encontra_hotel(hotel_id)
+        if hotel:
+            hotel.delete_hotel()
+            return {'message': 'hotel deletado!'}
         return {'message': 'hotel não encontrado!'}
 

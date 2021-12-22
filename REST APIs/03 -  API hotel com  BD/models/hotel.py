@@ -44,3 +44,7 @@ class HotelModel(bd.Model):
         self.cidade =cidade
 
         self.save_hotel()
+
+    def delete_hotel(self):
+        bd.session.delete(self)
+        bd.session.commit()
