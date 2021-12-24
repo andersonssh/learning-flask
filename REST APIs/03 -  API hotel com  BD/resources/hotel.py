@@ -31,8 +31,8 @@ class Hoteis(Resource):
 class Hotel(Resource):
     atributos = reqparse.RequestParser()
     # pegar apenas os argumentos definidos abaixo
-    atributos.add_argument('nome', required=True, help='O nome nao pode ser vazio!')
-    atributos.add_argument('estrelas', type=float)
+    atributos.add_argument('nome', required=True, help="O campo 'nome' nao pode ficar em branco")
+    atributos.add_argument('estrelas', type=float, required=True, help="O campo 'estrelas' nao pode ficar em branco")
     atributos.add_argument('diaria', type=float)
     atributos.add_argument('cidade')
 
@@ -54,8 +54,10 @@ class Hotel(Resource):
         dados = {'hotel_id': hotel_id, **Hotel.atributos.parse_args()}
         #as chaves serao passadas para o construtor noformato (nome='xxx'....)
         hotel = HotelModel(**dados)
-        hotel.save_hotel()
-
+        try:
+            hotel.save_hotel()
+        except:
+            return {'message': 'Ocorreu um erro interno ao tentar salvar dados'}, 500
         return hotel.json(), 200
 
 
@@ -69,13 +71,19 @@ class Hotel(Resource):
             return hotel_encontrado.json(), 200
 
         hotel = HotelModel(**dados)
-        hotel.save_hotel()
+        try:
+            hotel.save_hotel()
+        except:
+            return {'message': 'Ocorreu um erro interno ao tentar salvar dados'}, 500
         return hotel.json(), 201 # hotel criado
 
     def delete(self, hotel_id):
         hotel = HotelModel.encontra_hotel(hotel_id)
         if hotel:
-            hotel.delete_hotel()
+            try:
+                hotel.delete_hotel()
+            except:
+                return {'message': 'Ocorreu um erro interno ao tentar deletar dados'}, 500
             return {'message': 'hotel deletado!'}
         return {'message': 'hotel não encontrado!'}
 
