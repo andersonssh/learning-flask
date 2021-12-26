@@ -64,4 +64,3 @@ class Hotel(Resource):
                 return {'message': 'Ocorreu um erro interno ao tentar deletar dados'}, 500
             return {'message': 'hotel deletado!'}
         return {'message': 'hotel não encontrado!'}
-

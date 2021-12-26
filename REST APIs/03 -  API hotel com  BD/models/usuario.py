@@ -17,7 +17,7 @@ class UserModel(bd.Model):
         }
 
     @classmethod
-    def encontra_hotel(cls, user_id):
+    def encontra_usuario(cls, user_id):
         user = cls.query.get(user_id)
         if user:
             return user
