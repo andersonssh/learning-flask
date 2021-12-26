@@ -2,7 +2,7 @@ from flask_restful import Resource, reqparse
 from models.usuario import UserModel
 
 
-class Hotel(Resource):
+class User(Resource):
     def get(self, hotel_id):
         usuario = UserModel.encontra_usuario(hotel_id)
 
