@@ -1,6 +1,11 @@
 from flask_restful import Resource, reqparse
 from models.usuario import UserModel
+from flask_jwt_extended import create_access_token
+from werkzeug.security import safe_str_cmp
 
+atributos = reqparse.RequestParser()
+atributos.add_argument('login', type=str, required=True, help='O campo login nao pode ficar em branco')
+atributos.add_argument('senha', type=str, required=True, help='O campo senha nao pode ficar em branco')
 
 class User(Resource):
     def get(self, user_id):
@@ -25,10 +30,6 @@ class User(Resource):
 class UserRegister(Resource):
     # /cadastro
     def post(self):
-        atributos = reqparse.RequestParser()
-        atributos.add_argument('login', type=str, required=True, help='O campo login nao pode ficar em branco')
-        atributos.add_argument('senha', type=str, required=True, help='O campo senha nao pode ficar em branco')
-
         dados = atributos.parse_args()
 
         if UserModel.encontra_usuario_por_login(dados['login']):
@@ -38,3 +39,15 @@ class UserRegister(Resource):
             ################## HASH não foi usado
             UserModel(**dados).save_user()
             return {'message': 'usuario criado'}, 200
+
+class UserLogin(Resource):
+    @classmethod
+    def post(cls):
+        dados = atributos.parse_args()
+
+        user = UserModel.encontra_usuario_por_login(dados['login'])
+
+        if user and safe_str_cmp(user.senha, dados['senha']):
+            token_de_acesso = create_access_token(identity=user.user_id)
+            return {'acess_token': token_de_acesso}, 200
+        return {'message': 'Usuario ou senha incorreta.'}
