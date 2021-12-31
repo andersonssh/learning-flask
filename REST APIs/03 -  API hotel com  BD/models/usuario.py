@@ -23,6 +23,11 @@ class UserModel(bd.Model):
             return user
         return None
 
+    @classmethod
+    def encontra_usuario_por_login(cls, login):
+        user = cls.query.filter_by(login=login).first()
+        return user if user else None
+
     def save_user(self):
         bd.session.add(self)
         bd.session.commit()
