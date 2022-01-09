@@ -1,5 +1,6 @@
 from flask_restful import Resource, reqparse
 from models.hotel import HotelModel
+from flask_jwt_extended import jwt_required, get_jwt_identity, current_user
 
 class Hoteis(Resource):
     def get(self):
@@ -24,7 +25,11 @@ class Hotel(Resource):
 
         return {'message': 'Hotel not found'}, 404
 
+    # sem os parenteses um erro é é retornado
+    # TypeError: wrapper() got an unexpected keyword argument 'hotel_id'
+    @jwt_required()
     def post(self, hotel_id):
+        print(f'sendo acessado por: "{current_user.login}", de id: -> {current_user.user_id} <-')
         if HotelModel.encontra_hotel(hotel_id):
             return {"message": f"Hotel id '{hotel_id}' já existe."}, 400
 
@@ -38,7 +43,7 @@ class Hotel(Resource):
             return {'message': 'Ocorreu um erro interno ao tentar salvar dados'}, 500
         return hotel.json(), 200
 
-
+    @jwt_required()
     def put(self, hotel_id):
         dados = {'hotel_id': hotel_id, **Hotel.atributos.parse_args()}
         hotel_encontrado = HotelModel.encontra_hotel(hotel_id)
@@ -54,7 +59,7 @@ class Hotel(Resource):
         except:
             return {'message': 'Ocorreu um erro interno ao tentar salvar dados'}, 500
         return hotel.json(), 201 # hotel criado
-
+    @jwt_required()
     def delete(self, hotel_id):
         hotel = HotelModel.encontra_hotel(hotel_id)
         if hotel:

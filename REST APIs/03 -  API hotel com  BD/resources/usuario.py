@@ -2,6 +2,8 @@ from flask_restful import Resource, reqparse
 from models.usuario import UserModel
 from flask_jwt_extended import create_access_token
 from werkzeug.security import safe_str_cmp
+from flask_jwt_extended import jwt_required, get_jwt
+from BLACKLIST import BLACKLIST
 
 atributos = reqparse.RequestParser()
 atributos.add_argument('login', type=str, required=True, help='O campo login nao pode ficar em branco')
@@ -16,6 +18,7 @@ class User(Resource):
 
         return {'message': 'User not found'}, 404
 
+    @jwt_required()
     def delete(self, user_id):
         usuario = UserModel.encontra_usuario(user_id)
         if usuario:
@@ -51,3 +54,10 @@ class UserLogin(Resource):
             token_de_acesso = create_access_token(identity=user.user_id)
             return {'acess_token': token_de_acesso}, 200
         return {'message': 'Usuario ou senha incorreta.'}
+
+class UserLogout(Resource):
+    @jwt_required()
+    def post(self):
+        jti = get_jwt()['jti'] # identificador do token
+        BLACKLIST.add(jti)
+        return {'message': 'voce se deslogou'}, 200
